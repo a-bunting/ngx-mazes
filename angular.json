@@ -3,5 +3,49 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "ngx-mazes": {
+      "projectType": "library",
+      "root": "projects/ngx-mazes",
+      "sourceRoot": "projects/ngx-mazes/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-mazes/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-mazes/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-mazes/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-mazes/src/test.ts",
+            "tsConfig": "projects/ngx-mazes/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-mazes/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ngx-mazes/**/*.ts",
+              "projects/ngx-mazes/**/*.html"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ngx-mazes",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }
