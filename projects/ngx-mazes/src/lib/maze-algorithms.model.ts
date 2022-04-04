@@ -207,7 +207,6 @@ export abstract class MazeAlgorithms {
       longMaze.tiles[randomHeight][Math.floor(longMaze.tiles[randomHeight].length / 2) -1].passable.r = true;
       longMaze.tiles[randomHeight][Math.floor(longMaze.tiles[randomHeight].length / 2)].passable.l = true;
 
-      console.log(longMaze);
       return longMaze;
     }
 
