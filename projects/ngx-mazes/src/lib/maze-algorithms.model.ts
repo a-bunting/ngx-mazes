@@ -33,10 +33,7 @@ export abstract class MazeAlgorithms {
   // control of the process
   play: boolean = true;
 
-  // maze speed for solved over tiem mazes
-  iterationsPerSecond: number = 100;
-
-  abstract generateMaze(width: number, height: number, timeDelay?: number): void;//{ maze: Maze2D, executionTime: number, iterationCount: number };
+  abstract generateMaze(width: number, height: number, iterationsPerSecond?: number): void;//{ maze: Maze2D, executionTime: number, iterationCount: number };
 
   constructor() {}
 
@@ -114,14 +111,6 @@ export abstract class MazeAlgorithms {
     }
 
     /**
-     * Modify the iteration speed of the maze generation
-     * @param newSpeed
-     */
-    mazeGenerationSpeed(newSpeed: number): void {
-      this.iterationsPerSecond = newSpeed;
-    }
-
-    /**
      * Makes thick walls throughout the maze so there are no sharp turns.
      * Useful for game mazes.
      * Elegant? No. Working? Yeah!
@@ -183,7 +172,9 @@ export abstract class MazeAlgorithms {
      * @returns
      */
     mirrorMazeXDirection(maze: Maze2D, timesMirrored?: number): Maze2D {
-      let longMaze: Maze2D = {...maze, width: maze.width*2  };
+      let longMaze: Maze2D = {...maze};
+      longMaze.width *= 2;
+
       // iterate the rows...
       for(let i = 0 ; i < maze.tiles.length ; i++) {
         // store the value for the tile length or it might end up going forever as it grows itself.
@@ -197,8 +188,7 @@ export abstract class MazeAlgorithms {
           newTile.id = this.generateRandomString(5);
           // flip the passables to be a mirror...
           newTile.passable = { l: oldTile.passable.r, r: oldTile.passable.l, t: oldTile.passable.t, b: oldTile.passable.b };
-
-          // and push tot he main array...
+          // and push to the main array...
           longMaze.tiles[i].push({...newTile});
         }
       }
@@ -216,7 +206,9 @@ export abstract class MazeAlgorithms {
      * @returns
      */
     mirrorMazeYDirection(maze: Maze2D, timesMirrored: number = 2): Maze2D {
-        let highMaze: Maze2D = {...maze, height: maze.height*2 };
+        let highMaze: Maze2D = {...maze};
+        highMaze.height *= 2;
+
         const mazeHeight: number = maze.tiles.length;
         // iterate the rows...
         for(let i = mazeHeight - 1 ; i >= 0 ; i--) {
@@ -225,10 +217,10 @@ export abstract class MazeAlgorithms {
             let newRow : Tile[] = [];
             // iterate over and flip the up and down walls...
             for(let o = 0 ; o < mazeLength ; o++) {
-            let newTile: Tile = {...maze.tiles[i][o]};
-            newTile.passable = { t: maze.tiles[i][o].passable.b, b: maze.tiles[i][o].passable.t, l: maze.tiles[i][o].passable.l, r: maze.tiles[i][o].passable.r };
-            newTile.id = this.generateRandomString(5);
-            newRow.push(newTile);
+              let newTile: Tile = {...maze.tiles[i][o]};
+              newTile.passable = { t: maze.tiles[i][o].passable.b, b: maze.tiles[i][o].passable.t, l: maze.tiles[i][o].passable.l, r: maze.tiles[i][o].passable.r };
+              newTile.id = this.generateRandomString(5);
+              newRow.push(newTile);
             }
             // and put it back onto the array...
             highMaze.tiles.push(newRow);

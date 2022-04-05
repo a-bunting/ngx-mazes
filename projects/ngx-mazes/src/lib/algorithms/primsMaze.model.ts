@@ -48,7 +48,7 @@ export class PrimsMaze extends MazeAlgorithms {
     // until all cells have been visited...
     if(iterationsPerSecond > 0) {
 
-      timer = window.setTimeout(() => { fn(); }, (1 / this.iterationsPerSecond) * 1000);
+      timer = window.setTimeout(() => { fn(); }, (1 / iterationsPerSecond) * 1000);
 
       const fn = (): void => {
         if(markedCells.length > 0) {
@@ -62,10 +62,7 @@ export class PrimsMaze extends MazeAlgorithms {
             pausedTime += performance.now() - lastTime;
             lastTime = performance.now();
           }
-          timer = window.setTimeout(() => { fn(); }, (1 / this.iterationsPerSecond) * 1000);
-        } else {
-          // and return the final data...
-          //return { maze, executionTime: performance.now() - startingTime, iterationCount };
+          timer = window.setTimeout(() => { fn(); }, (1 / iterationsPerSecond) * 1000);
         }
       }
 
@@ -75,9 +72,7 @@ export class PrimsMaze extends MazeAlgorithms {
         [maze, currentCell, markedCells, visitedCells] = this.iteration(maze, currentCell, markedCells, visitedCells, width, height)
       }
       // push the maze to the user
-      this.currentData.next({maze, i: currentCell.i, o: currentCell.o, iteration: iterationCount, timeTaken: performance.now() - startingTime, finalIteration: true});
-      // and return
-      //return { maze, executionTime: performance.now() - startingTime, iterationCount };
+      this.currentData.next({maze, i: currentCell.i, o: currentCell.o, iteration: 1, timeTaken: performance.now() - startingTime, finalIteration: true});
     }
 
 
@@ -94,6 +89,9 @@ export class PrimsMaze extends MazeAlgorithms {
    * @returns
    */
   iteration(maze: Maze2D, currentCell: { i: number, o: number }, markedCells: { i: number, o: number }[], visitedCells: { i: number, o: number }[], width: number, height: number): [Maze2D, { i: number, o: number }, { i: number, o: number }[], { i: number, o: number }[]] {
+
+      console.log(maze.tiles.length);
+
       // select a random marked cell
       let cell: { i: number, o: number } = markedCells[Math.floor(Math.random() * markedCells.length)];
 
