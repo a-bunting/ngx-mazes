@@ -6,7 +6,7 @@ This library was generated with [Angular CLI](https://github.com/angular/angular
 
 https://user-images.githubusercontent.com/763952/162148955-9810b076-61ac-4e22-a61f-315b6c8965f7.mp4
 
-A maze generated at random with Prims Algorithm. It has had its wall thickened and then is reflected both in the X and Y direction. A central room is added at the end. A pacman maze!
+A maze generated at random with Prims Algorithm. It has had its wall thickened and then is reflected both in the X and Y direction. A central room is added at the end. A pacman maze! Note that canvas animation is not yet a part of this package, which only creates a raw maze data file.
 
 ## Todo 
 - [ ] Add weave mazes
