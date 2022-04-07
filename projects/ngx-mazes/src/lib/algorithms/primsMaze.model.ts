@@ -90,8 +90,6 @@ export class PrimsMaze extends MazeAlgorithms {
    */
   iteration(maze: Maze2D, currentCell: { i: number, o: number }, markedCells: { i: number, o: number }[], visitedCells: { i: number, o: number }[], width: number, height: number): [Maze2D, { i: number, o: number }, { i: number, o: number }[], { i: number, o: number }[]] {
 
-      console.log(maze.tiles.length);
-
       // select a random marked cell
       let cell: { i: number, o: number } = markedCells[Math.floor(Math.random() * markedCells.length)];
 

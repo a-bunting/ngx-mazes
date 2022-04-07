@@ -1,4 +1,4 @@
-import { BehaviorSubject } from "rxjs";
+import { Subject } from "rxjs";
 
 export interface Maze2D {
 	width: number; height: number;
@@ -21,6 +21,7 @@ export interface MazeNode {
   x: number; y: number; id: string; connections: string[]
 }
 
+// delete when appropriate...
 export interface MazeStatsData {
   width: number; height: number; iterations: { min: number; actual: number }; efficiency: number; time: number; maxIterationsPerSecond: number;
 }
@@ -28,7 +29,7 @@ export interface MazeStatsData {
 export abstract class MazeAlgorithms {
 
   // values which return data
-  currentData = new BehaviorSubject<IterationData>({maze: { width: 1, height: 1, tiles: []}, i: 0, o: 0, iteration: 0, timeTaken: 0, finalIteration: false});
+  currentData = new Subject<IterationData>();
 
   // control of the process
   play: boolean = true;
@@ -172,8 +173,16 @@ export abstract class MazeAlgorithms {
      * @returns
      */
     mirrorMazeXDirection(maze: Maze2D, timesMirrored?: number): Maze2D {
-      let longMaze: Maze2D = {...maze};
-      longMaze.width *= 2;
+      let longMaze: Maze2D;
+
+      // wait for better support to implement
+      // try {
+      //   longMaze = structuredClone(maze);
+      // } catch(e) {
+        longMaze = JSON.parse(JSON.stringify(maze));
+      // }
+
+      longMaze.width = maze.width*2;
 
       // iterate the rows...
       for(let i = 0 ; i < maze.tiles.length ; i++) {
@@ -206,8 +215,16 @@ export abstract class MazeAlgorithms {
      * @returns
      */
     mirrorMazeYDirection(maze: Maze2D, timesMirrored: number = 2): Maze2D {
-        let highMaze: Maze2D = {...maze};
-        highMaze.height *= 2;
+        let highMaze: Maze2D;
+
+        // wait for better support to implement
+        // try {
+        //   highMaze = structuredClone(maze);
+        // } catch(e) {
+          highMaze = JSON.parse(JSON.stringify(maze));
+        // }
+
+        highMaze.height = maze.height * 2;
 
         const mazeHeight: number = maze.tiles.length;
         // iterate the rows...
